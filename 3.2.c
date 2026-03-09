@@ -4,61 +4,59 @@
 */
 
 #include <stdio.h>
+#include <math.h>
+
+#define SQUARE(x) ((x)*(x))
+#define TWOPI 6.28318
+
+double my_cos(double);
 
 int main()
 {
-    int m, n;
-    int saddle_points = 0;
+    double angle;
 
-    printf("Enter the number of rows and columns: ");
-    scanf("%d %d", &m, &n);
+    printf("Enter value of x > ");
+    scanf("%lf", &angle);
 
-    int matrix[m][n];
+    double result = my_cos(angle);
 
-    printf("Enter the elements of the matrix:\n");
-
-    for (int i = 0; i < m; i++)
-    {
-        for (int j = 0; j < n; j++)
-        {
-            scanf("%d", &matrix[i][j]);
-        }
-    }
-
-    for (int i = 0; i < m; i++)
-    {
-        int min = matrix[i][0];
-        int col = 0;
-
-        for (int j = 1; j < n; j++)
-        {
-            if (matrix[i][j] < min)
-            {
-                min = matrix[i][j];
-                col = j;
-            }
-        }
-
-        int isSaddle = 1;
-
-        for (int k = 0; k < m; k++)
-        {
-            if (matrix[k][col] > min)
-            {
-                isSaddle = 0;
-                break;
-            }
-        }
-
-        if (isSaddle)
-        {
-            printf("Saddle point: %d\n", min);
-            saddle_points++;
-        }
-    }
-
-    if (saddle_points == 0)
-        printf("No saddle point found\n");
+    printf("cos(%lf) = %lf\n", angle, result);
 
     return 0;
+}
+
+double my_cos(double x)
+{
+    x = fmod(x, TWOPI);   // reduce angle within 0–2π
+
+    double sum = 1;
+    double x2 = SQUARE(x);
+    double term = 1;
+    double next = 0;
+
+    double accuracy = 1;
+    double required = 0.0001;
+
+    int i = 1;
+
+    while (1)
+    {
+        next = term * (-1) * x2 / ((2 * i) * (2 * i - 1));
+        sum = sum + next;
+
+        printf("Iteration = %d\n", i);
+
+        term = next;
+        i++;
+
+        accuracy = (next/sum > 0) ? (next/sum) : -(next/sum);
+
+        if (sum == 0 || accuracy <= required)
+            break;
+
+        if (i > 1000)
+            return 0;
+    }
+
+    return sum;
 }
