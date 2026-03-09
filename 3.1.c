@@ -6,37 +6,55 @@
 #include <stdio.h>
 #include <math.h>
 
-#define sqr(x) ((x)*(x))
-#define TwoPI 6.2831
+#define SQUARE(x) ((x)*(x))
+#define TWOPI 6.2831
 
-double calc_sin(double);
+double my_sin(double);
 
 int main()
 {
-    double a;
-    printf("Enter x value > ");
-    scanf("%lf", &a);
-    printf("sin(%lf) = %lf", a, calc_sin(a));
+    double angle;
+
+    printf("Enter value of x : ");
+    scanf("%lf", &angle);
+
+    double result = my_sin(angle);
+
+    printf("sin(%lf) = %lf\n", angle, result);
+
     return 0;
 }
 
-double calc_sin(double x) 
+double my_sin(double x)
 {
-    x = fmod(x, TwoPI);
-    double Taylorsum = x, xsqr = sqr(x), currAcc = 1, reqAcc = 0.0001;
-    double currTerm = x, nextTerm = 0;
-    int n = 1;
+    x = fmod(x, TWOPI);
+
+    double sum = x;
+    double x2 = SQUARE(x);
+    double term = x;
+    double next = 0;
+
+    double accuracy = 1;
+    double required = 0.0001;
+
+    int i = 1;
 
     while (1)
     {
-        nextTerm = (double)currTerm * -1 * xsqr / ((2 * n) * (2 * n + 1));
-        Taylorsum += nextTerm;
-        printf("N = %d\n", n);
-        currTerm = nextTerm;
-        n++;
-        currAcc = (nextTerm / Taylorsum) > 0 ? (nextTerm / Taylorsum) : -1 * (nextTerm / Taylorsum);
-        if (Taylorsum == 0 || currAcc <= reqAcc) break;
-        if (n > 1000) return 0;
+        next = term * (-1) * x2 / ((2*i)*(2*i+1));
+        sum = sum + next;
+
+        term = next;
+        i++;
+
+        accuracy = (next/sum > 0) ? (next/sum) : -(next/sum);
+
+        if(sum == 0 || accuracy <= required)
+            break;
+
+        if(i > 1000)
+            return 0;
     }
-    return Taylorsum;
+
+    return sum;
 }
