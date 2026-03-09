@@ -1,43 +1,64 @@
 /*
- * Author:Fahad Abdulla
+ * Author: Fahad Abdulla
  * Date: 09/03/2026
 */
+
 #include <stdio.h>
-#include <math.h>
-
-#define sqr(x) ((x)*(x))
-#define TwoPI 6.28318
-
-double calc_cos(double);
 
 int main()
 {
-    double a;
-    printf("Enter x value > ");
-    scanf("%lf", &a);
-    printf("cos(%lf) = %lf", a, calc_cos(a));
-    return 0;
-}
+    int m, n;
+    int saddle_points = 0;
 
-double calc_cos(double x) // where x in radians
-{
-    x = fmod(x, TwoPI); // because cos repeats and can incress efficiency
-    double Taylorsum = 1, xsqr = sqr(x), currAcc = 1, reqAcc = 0.0001;
-    double currTerm = 1, nextTerm = 0;
-    int n = 1;
+    printf("Enter the number of rows and columns: ");
+    scanf("%d %d", &m, &n);
 
-    while (1)
+    int matrix[m][n];
+
+    printf("Enter the elements of the matrix:\n");
+
+    for (int i = 0; i < m; i++)
     {
-        nextTerm = (double)currTerm * -1 * xsqr / ((2 * n) * (2 * n - 1));
-        Taylorsum += nextTerm;
-        printf("N = %d\n", n);
-        currTerm = nextTerm;
-        n++;
-        // stop 
-        currAcc = (nextTerm / Taylorsum) > 0 ? (nextTerm / Taylorsum) : -1 * (nextTerm / Taylorsum);
-        if (Taylorsum == 0 || currAcc <= reqAcc) break;
-        // just for extra safe
-        if (n > 1000) return 0;
+        for (int j = 0; j < n; j++)
+        {
+            scanf("%d", &matrix[i][j]);
+        }
     }
-    return Taylorsum;
+
+    for (int i = 0; i < m; i++)
+    {
+        int min = matrix[i][0];
+        int col = 0;
+
+        for (int j = 1; j < n; j++)
+        {
+            if (matrix[i][j] < min)
+            {
+                min = matrix[i][j];
+                col = j;
+            }
+        }
+
+        int isSaddle = 1;
+
+        for (int k = 0; k < m; k++)
+        {
+            if (matrix[k][col] > min)
+            {
+                isSaddle = 0;
+                break;
+            }
+        }
+
+        if (isSaddle)
+        {
+            printf("Saddle point: %d\n", min);
+            saddle_points++;
+        }
+    }
+
+    if (saddle_points == 0)
+        printf("No saddle point found\n");
+
+    return 0;
 }
