@@ -1,7 +1,7 @@
 /*
  * Author: Fahad Abdulla
  * Description: Finding sadle point inside a matrix
- * Date: 08/03/2026
+ * Date: 09/03/2026
 */
 
 #include <stdio.h>
@@ -24,8 +24,6 @@ int main()
             scanf("%d", &matrix[i][j]);
         }
     }
-    // find saddle points
-    // find smallest in row and largest in col and then uninon thoese
     for(int i=0; i<m; i++)
     {
         int min = matrix[]
