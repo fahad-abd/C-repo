@@ -1,6 +1,5 @@
 /*
  * Author: Fahad Abdulla
- * Description: Finding sadle point inside a matrix
  * Date: 09/03/2026
 */
 
