@@ -1,87 +1,94 @@
 /*
- * Author: Fahad Abdulla
- * Date: 09/03/2026
+ author : fahad abdulla
+ date   : 09/03/2026
 */
-#include<stdio.h>
+
+#include <stdio.h>
 
 int main()
 {
-    int a[10][10],m,n,i,j;
-    int min,max,col;
-    int saddle=0;
-    int largest,second;
+    int a[10][10];
+    int r, c;
+    int i, j;
 
-    printf("Enter rows and columns: ");
-    scanf("%d%d",&m,&n);
+    int mn, cl;
+    int f;
+    int sp = 0;
 
-    printf("Enter matrix elements:\n");
-    for(i=0;i<m;i++)
+    int l, s;
+
+    printf("enter rows and columns: ");
+    scanf("%d %d", &r, &c);
+
+    printf("enter matrix elements:\n");
+
+    for(i = 0; i < r; i++)
     {
-        for(j=0;j<n;j++)
+        for(j = 0; j < c; j++)
         {
-            scanf("%d",&a[i][j]);
+            scanf("%d", &a[i][j]);
         }
     }
 
-    for(i=0;i<m;i++)
-    {
-        min=a[i][0];
-        col=0;
+    /* saddle point */
 
-        for(j=1;j<n;j++)
+    for(i = 0; i < r; i++)
+    {
+        mn = a[i][0];
+        cl = 0;
+
+        for(j = 1; j < c; j++)
         {
-            if(a[i][j]<min)
+            if(a[i][j] < mn)
             {
-                min=a[i][j];
-                col=j;
+                mn = a[i][j];
+                cl = j;
             }
         }
 
-        max=1;
+        f = 1;
 
-        for(j=0;j<m;j++)
+        for(j = 0; j < r; j++)
         {
-            if(a[j][col]>min)
+            if(a[j][cl] > mn)
             {
-                max=0;
+                f = 0;
                 break;
             }
         }
 
-        if(max==1)
+        if(f == 1)
         {
-            printf("Saddle point = %d at position (%d,%d)\n",min,i+1,col+1);
-            saddle=1;
+            printf("saddle point = %d at (%d,%d)\n", mn, i+1, cl+1);
+            sp = 1;
         }
     }
 
-    if(saddle==0)
-    printf("No saddle point exists\n");
+    if(sp == 0)
+        printf("no saddle point\n");
 
+    /* second largest */
 
-    /* Finding Second Largest */
+    l = a[0][0];
+    s = a[0][0];
 
-    largest=a[0][0];
-    second=a[0][0];
-
-    for(i=0;i<m;i++)
+    for(i = 0; i < r; i++)
     {
-        for(j=0;j<n;j++)
+        for(j = 0; j < c; j++)
         {
-            if(a[i][j]>largest)
+            if(a[i][j] > l)
             {
-                second=largest;
-                largest=a[i][j];
+                s = l;
+                l = a[i][j];
             }
-            else if(a[i][j]>second && a[i][j]!=largest)
+            else if(a[i][j] > s && a[i][j] != l)
             {
-                second=a[i][j];
+                s = a[i][j];
             }
         }
     }
 
-    printf("Second largest element = %d",second);
+    printf("second largest = %d\n", s);
 
     return 0;
 }
-
