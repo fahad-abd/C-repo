@@ -23,7 +23,6 @@ double find_area(double diameter)
 int main()
 {
     double x1, y1, x2, y2;
-    // assuming both points in circle and maximum distance possible.
     printf("Point 1\n");
     printf("\tEnter the x and y(seperated by space) > ");
     scanf("%lf %lf", &x1, &y1);
