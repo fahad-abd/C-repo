@@ -1,42 +1,48 @@
 #include <stdio.h>
 #include <math.h>
 
-#define PI 3.141
-#define square(x) ((x) * (x))
+#define P 3.141
+#define sq(a) ((a)*(a))
 
-double find_distance(double x1, double y1, double x2, double y2)
+double distance_between(double a1, double b1, double a2, double b2)
 {
-    return sqrt(square(x2 - x1) + square(y2 - y1));
+    double d;
+    d = sqrt(sq(a2 - a1) + sq(b2 - b1));
+    return d;
 }
 
-double find_perimeter(double diameter)
+double circle_perimeter(double d)
 {
-    return PI * diameter;
+    return P * d;
 }
 
-double find_area(double diameter)
+double circle_area(double d)
 {
-    double r = diameter / 2;
-    return PI * square(r);
+    double radius;
+    radius = d / 2.0;
+    return P * sq(radius);
 }
 
 int main()
 {
-    double x1, y1, x2, y2;
-    printf("Point 1\n");
-    printf("\tEnter the x and y(seperated by space) > ");
-    scanf("%lf %lf", &x1, &y1);
+    double xA, yA, xB, yB;
+    double d, peri, ar;
 
-    printf("Point 2\n");
-    printf("\tEnter the x and y(seperated by space) > ");
-    scanf("%lf %lf", &x2, &y2);
+    printf("First Point\n");
+    printf("Enter x and y : ");
+    scanf("%lf %lf", &xA, &yA);
 
-    double diameter = find_distance(x1, y1, x2, y2);
-    double perimeter = find_perimeter(diameter);
-    double area = find_area(diameter);
+    printf("Second Point\n");
+    printf("Enter x and y : ");
+    scanf("%lf %lf", &xB, &yB);
 
-    printf("Diameter  = %lf\n", diameter);
-    printf("Perimeter = %lf\n", perimeter);
-    printf("Area      = %lf\n", area);
+    d = distance_between(xA, yA, xB, yB);
+    peri = circle_perimeter(d);
+    ar = circle_area(d);
+
+    printf("\nDiameter = %lf", d);
+    printf("\nPerimeter = %lf", peri);
+    printf("\nArea = %lf", ar);
+
     return 0;
 }
