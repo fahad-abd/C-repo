@@ -7,7 +7,7 @@
 #include <math.h>
 
 #define sqr(x) ((x)*(x))
-#define TwoPI 6.28318
+#define TwoPI 6.2831
 
 double calc_sin(double);
 
